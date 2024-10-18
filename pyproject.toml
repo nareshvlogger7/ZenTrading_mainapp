@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ZenTrading"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Flask = "2.3.2"
+pandas = "2.0.3"
+requests = "2.31.0"
+gunicorn = "20.1.0"
+smartapi-python = "1.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
