@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Trading App</title>
+    <style>
+        #startButton {
+            display: none; /* Initially hide the start button */
+        }
+    </style>
+    <script>
+        // Function to log in the user
+        function login() {
+            const apiKey = document.getElementById('api_key').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Make a POST request to the /login endpoint
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ api_key: apiKey, username: username, password: password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    alert('Login successful!');
+                    document.getElementById('loginForm').style.display = 'none';  // Hide the login form
+                    document.getElementById('startButton').style.display = 'block'; // Show the start button
+                } else {
+                    alert('Login failed: ' + data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Function to start the trading process
+        function startTrading() {
+            const current_price = 100;  // Example value
+            const previous_high = 110;  // Example value
+            const previous_low = 90;    // Example value
+            const current_volume = 1500;  // Example value
+            const average_volume = 1300;  // Example value
+
+            // Make a POST request to the /take_order endpoint
+            fetch('/take_order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    current_price: current_price, 
+                    previous_high: previous_high, 
+                    previous_low: previous_low, 
+                    current_volume: current_volume, 
+                    average_volume: average_volume 
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // Show the result (e.g., "Buy order placed")
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Trading System</h1>
+
+    <!-- Login Form -->
+    <div id="loginForm">
+        <label for="api_key">API Key:</label>
+        <input type="text" id="api_key" placeholder="Enter your API key" required><br><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Enter your username" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required><br><br>
+
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Start Trading Button (Hidden initially) -->
+    <div>
+        <button id="startButton" onclick="startTrading()">Start Trading</button>
+    </div>
+
+</body>
+</html>
