@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import requests
 from datetime import date, timedelta
-from smartapi.smartConnect import SmartConnect  # Corrected import
+from SmartApi.smartConnect import SmartConnect
 from golden_strategies import should_buy_lr, should_sell_lr, should_buy_lg, should_sell_lg
 import os
 
